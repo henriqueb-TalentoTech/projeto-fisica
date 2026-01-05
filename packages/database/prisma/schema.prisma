@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Course {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  slug        String    @unique
+  isFree      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  modules     Module[]
+
+  @@map("courses")
+}
+
+model Module {
+  id          String    @id @default(uuid())
+  title       String
+  order       Int       @default(0)
+  courseId    String    @map("course_id")
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons     Lesson[]
+
+  @@map("modules")
+}
+
+model Lesson {
+  id          String    @id @default(uuid())
+  title       String
+  slug        String    @unique
+  order       Int       @default(0)
+  moduleId    String    @map("module_id")
+  module      Module    @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  materials   Material[]
+
+  @@map("lessons")
+}
+
+model Material {
+  id          String       @id @default(uuid())
+  title       String
+  type        MaterialType
+  url         String
+  lessonId    String       @map("lesson_id")
+  lesson      Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@map("materials")
+}
+
+enum MaterialType {
+  VIDEO
+  PDF
+  SLIDE
+  LINK
+}

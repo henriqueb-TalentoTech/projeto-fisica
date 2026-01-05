@@ -1,0 +1,32 @@
+# Taplo Configuration
+# Formatador TOML - equivalente ao terraform fmt para .tf
+
+[formatting]
+# Alinha sinais de = em tabelas (como terraform fmt)
+align_entries = true
+
+# Arrays em múltiplas linhas quando > 80 chars
+array_auto_expand    = true
+array_trailing_comma = true
+
+# Indentação com 4 espaços (padrão Python)
+indent_string = "    "
+
+# Strings sempre com aspas duplas
+allowed_blank_lines = 1
+
+# Reordena chaves alfabeticamente dentro de seções
+reorder_keys = false
+
+# Mantém comentários
+compact_arrays        = false
+compact_inline_tables = false
+
+[schema]
+# Valida pyproject.toml contra schema oficial
+enabled = true
+
+[[rule]]
+# pyproject.toml usa schema específico do Python
+include = [ "pyproject.toml" ]
+keys    = [ "tool.*" ]

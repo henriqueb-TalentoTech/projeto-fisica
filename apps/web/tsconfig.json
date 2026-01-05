@@ -1,0 +1,8 @@
+{
+  "extends": "@repo/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "tsBuildInfoFile": "../../node_modules/.cache/web.tsbuildinfo"
+  },
+  "include": ["nextEnv.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
+}

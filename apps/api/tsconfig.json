@@ -1,0 +1,9 @@
+{
+  "extends": "@repo/tsconfig/nestjs.json",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "./dist",
+    "tsBuildInfoFile": "../../node_modules/.cache/api.tsbuildinfo"
+  },
+  "include": ["src/**/*"]
+}

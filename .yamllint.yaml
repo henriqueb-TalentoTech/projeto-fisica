@@ -1,0 +1,45 @@
+# .yamllint.yaml
+# Configuração do yamllint para o projeto
+---
+extends: default
+
+rules:
+  # Desabilita document-start (--- no início não é obrigatório)
+  document-start: disable
+
+  # Linhas longas são comuns em CI/CD - apenas warn
+  line-length:
+    max: 200
+    level: warning
+
+  # Permite comentários inline
+  comments:
+    min-spaces-from-content: 1
+
+  # Permite âncoras não referenciadas (comum em GitHub Actions)
+  anchors:
+    forbid-undeclared-aliases: true
+    forbid-duplicated-anchors: true
+    forbid-unused-anchors: false
+
+  # Indentação padrão
+  indentation:
+    spaces: 2
+    indent-sequences: true
+
+  # Permite chaves duplicadas (warn, não error)
+  key-duplicates: enable
+
+  # Truthy values
+  truthy:
+    allowed-values: ['true', 'false', 'on', 'off', 'yes', 'no']
+    check-keys: false
+
+ignore: |
+  node_modules/
+  .venv/
+  dist/
+  coverage/
+  **/package-lock.json
+  pwa/
+  frontend/node_modules/

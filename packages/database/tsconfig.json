@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "tsBuildInfoFile": "../../node_modules/.cache/database.tsbuildinfo"
+  },
+  "include": ["src", "prisma.config.ts"]
+}

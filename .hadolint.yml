@@ -1,0 +1,25 @@
+# .hadolint.yaml
+# Configuração do Hadolint para Dockerfile linting
+# Docs: https://github.com/hadolint/hadolint#configure
+
+# Ignorar regras intencionais
+ignored:
+  # DL3008: Pin versions in apt-get install
+  # Motivo: Versões fixas quebram com atualizações de distro (bookworm)
+  # Mitigação: apt-get upgrade -y garante patches de segurança
+  - DL3008
+
+  # DL3013: Pin versions in pip install
+  # Motivo: Já usamos requirements.txt com versões pinadas
+  # Os pip install sem versão são apenas para pip/setuptools/wheel
+  - DL3013
+
+  # DL3059: Multiple consecutive RUN instructions
+  # Motivo: Separação intencional para cache de layers
+  - DL3059
+
+# Nível de severidade para falhar o build
+failure-threshold: warning
+
+# Formato de saída
+format: tty

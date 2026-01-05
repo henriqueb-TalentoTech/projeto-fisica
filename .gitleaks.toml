@@ -1,0 +1,72 @@
+# .gitleaks.toml
+# Configuracao customizada do Gitleaks para detectar PII brasileira
+# Conformidade: LGPD Art. 6 (necessidade e adequacao)
+#
+# NOTA: Go regex NAO suporta lookbehind/lookahead (?<! e ?!)
+# Usamos word boundaries \b como alternativa
+
+title = "Gitleaks config - Projeto Saude"
+
+# Extender regras padrao do Gitleaks
+[extend]
+useDefault = true
+
+# ==============================================================================
+# REGRAS CUSTOMIZADAS PARA DOCUMENTOS BRASILEIROS
+# ==============================================================================
+
+[[rules]]
+id          = "cpf-brasileiro-formatado"
+description = "CPF brasileiro formatado (XXX.XXX.XXX-XX)"
+regex       = '''\b\d{3}\.\d{3}\.\d{3}-\d{2}\b'''
+tags        = [ "pii", "brazil", "lgpd" ]
+keywords    = [ "cpf" ]
+
+[[rules]]
+id          = "cns-brasileiro"
+description = "Cartao Nacional de Saude (CNS) - 15 digitos iniciando com 1,2,7,8,9"
+regex       = '''\b[12789]\d{14}\b'''
+tags        = [ "pii", "brazil", "health", "lgpd" ]
+keywords    = [ "cns", "cartao", "sus" ]
+
+[[rules]]
+id          = "rg-brasileiro-formatado"
+description = "RG brasileiro formatado (XX.XXX.XXX-X)"
+regex       = '''\b\d{2}\.\d{3}\.\d{3}-[\dXx]\b'''
+tags        = [ "pii", "brazil", "lgpd" ]
+keywords    = [ "rg", "identidade" ]
+
+# ==============================================================================
+# ALLOWLIST - PATHS E PADROES IGNORADOS
+# ==============================================================================
+
+[allowlist]
+description = "Arquivos e padroes permitidos (testes, mocks, docs)"
+
+# Paths ignorados (testes podem conter dados fake)
+paths = [
+    '''.*_test\.py$''',
+    '''.*\.test\.ts$''',
+    '''.*\.test\.tsx$''',
+    '''.*\.spec\.ts$''',
+    '''.*\.spec\.tsx$''',
+    '''tests/.*''',
+    '''__tests__/.*''',
+    '''.*fixtures.*''',
+    '''.*mocks.*''',
+    '''.*\.md$''',
+    '''.*\.example$''',
+]
+
+# Regexes para valores fake conhecidos
+regexes = [
+    # CPFs de teste conhecidos (invalidos por digito verificador)
+    '''000\.000\.000-00''',
+    '''111\.111\.111-11''',
+    '''123\.456\.789-0\d''',
+    # CNS de teste
+    '''000000000000000''',
+]
+
+# Commits especificos a ignorar (se necessario)
+commits = [  ]
